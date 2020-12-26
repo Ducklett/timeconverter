@@ -7,9 +7,19 @@
     <title>Time converter</title>
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="materialize.min.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="manifest" href="/manifest.json">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Sketchref">
+	<link rel="apple-touch-icon" href="/icons/icon-152.png">
+	<meta name="description" content="An app to manage sketch reference material">
+	<meta name="theme-color" content="#222222" />
+	<link rel="icon" href="/icons/icon-128.png">
 </head>
 
 <body class="vcenter ">
@@ -66,8 +76,20 @@
     </div>
 
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="materialize.min.js"></script>
     <script>
+
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/service-worker.js')
+				.then((reg) => {
+					console.log('Service worker registered.', reg);
+				});
+			});
+        }
+        
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
             let options = {}
