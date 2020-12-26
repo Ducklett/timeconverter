@@ -29,7 +29,8 @@
                     <div class="row" style="padding-top: 30px;">
                         <div class="input-field col s4">
                             <!-- <input value="10" id="minute_field" type="number"> -->
-                            <select name="direction" id="minute_field">
+                            <select name="minute" id="minute_field">
+                                <option value="0" selected>-</option>
                                 <option value="5" selected>Vijf</option>
                                 <option value="10" selected>Tien</option>
                                 <option value="15" selected>Kwart</option>
@@ -41,10 +42,12 @@
                             <select name="direction" id="hand-direction">
                                 <option value="left" selected>Voor</option>
                                 <option value="right">Over</option>
+                                <option id="to-half" value="leftDown">Voor half</option>
+                                <option id="past-half" value="rightDown">Over half</option>
                             </select>
                         </div>
                         <div class="input-field col s4">
-                            <select name="direction" id="hour_field">
+                            <select name="hour" id="hour_field">
                                 <option value="1" selected>1</option>
                                 <option value="2" selected>2</option>
                                 <option value="3" selected>3</option>
@@ -86,9 +89,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('select');
-            let options = {}
-            var instances = M.FormSelect.init(elems, options);
+
+            const initializeInputs = () => {
+                var elems = document.querySelectorAll('select');
+                let options = {}
+                var instances = M.FormSelect.init(elems, options);
+            }
 
             const min = document.getElementById('minute_field')
             const sign = document.getElementById('hand-direction')
@@ -96,16 +102,49 @@
             const hourv = document.getElementById('hour_field')
             const res1 = document.getElementById('time-result-1')
             const res2 = document.getElementById('time-result-2')
+            const tohalf = document.getElementById('to-half')
+            const pasthalf = document.getElementById('past-half')
 
             const updateResult = () => {
-                signContainer.classList[min.value == '30' ? 'add' : 'remove']('hidden')
-                let pad = v => v.toString().padStart(2, '0')
+                const pad = v => v.toString().padStart(2, '0')
                 let [minute, hour, side] = [parseInt(min.value), parseInt(hourv.value), sign.value]
-                if (minute == 30) side = 'left'
-                if (side == 'left') {
-                    minute = 60 - minute
-                    hour--
+
+                const signVisible = minute != 30 && minute != 0
+                signContainer.classList[signVisible ? 'remove' : 'add']('hidden')
+
+                const halfOptionsDisabled = minute > 10
+                tohalf.disabled = halfOptionsDisabled
+                pasthalf.disabled = halfOptionsDisabled
+
+                if (halfOptionsDisabled && (side == 'leftDown' || side == 'rightDown')) {
+                    side = 'left'
+                    sign.value = 'left'
                 }
+
+                initializeInputs()
+
+                if (minute == 30) {
+                    side = 'left'
+                }
+
+                if (minute != 0) {
+                    switch (side) {
+                        case 'leftDown':
+                            // voor half
+                            minute = 30 - minute
+                            hour--
+                            break
+                        case 'rightDown':
+                            // over half
+                            minute += 30
+                            break
+                        case 'left':
+                            minute = 60 - minute
+                            hour--
+                            break
+                    }
+                }
+
                 const zone = h => {
                     if (h < 6) return 'nacht'
                     if (h < 12) return 'ochtend'
@@ -125,6 +164,7 @@
             }
 
             updateResult()
+            initializeInputs()
         });
 
     </script>
