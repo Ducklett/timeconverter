@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="container" style="margin-top: 45px;">
+        <div class="row">
+            <div class="input-field col s4">
+                <!-- <input value="10" id="first_name" type="number"> -->
+                <select name="direction" id="first_name">
+                    <option value="5" selected>Vijf</option>
+                    <option value="10" selected>Tien</option>
+                    <option value="15" selected>Kwart</option>
+                    <option value="30">Half</option>
+                </select>
+                <label for="first_name">Minuut</label>
+            </div>
+            <div class="input-field col s4">
+                <select name="direction" id="hand-direction">
+                    <option value="left" selected>Voor</option>
+                    <option value="right">Over</option>
+                </select>
+            </div>
+            <div class="input-field col s4">
+                <select name="direction" id="last_name">
+                    <option value="1" selected>1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3" selected>3</option>
+                    <option value="4" selected>4</option>
+                    <option value="5" selected>5</option>
+                    <option value="6" selected>6</option>
+                    <option value="7" selected>7</option>
+                    <option value="8" selected>8</option>
+                    <option value="9" selected>9</option>
+                    <option value="10" selected>10</option>
+                    <option value="11" selected>11</option>
+                    <option value="12" selected>12</option>
+                </select>
+                <label for="last_name">Uur</label>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+            <span class="card-title">Digitale tijd</span>
+        <h2 id="time-result-1"></h2>
+        <small class="time-or">Of</small>
+        <h2 id="time-result-2"></h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            let options = {}
+            var instances = M.FormSelect.init(elems, options);
+
+            const min = document.getElementById('first_name')
+            const sign = document.getElementById('hand-direction')
+            const signContainer = sign.parentElement
+            const hourv = document.getElementById('last_name')
+            const res1 = document.getElementById('time-result-1')
+            const res2 = document.getElementById('time-result-2')
+
+            const updateResult = () => {
+                signContainer.classList[min.value == '30' ? 'add' : 'remove']('hidden')
+                let pad = v => v.toString().padStart(2,'0')
+                let [minute, hour, side] = [parseInt(min.value), parseInt(hourv.value), sign.value]
+                if (minute==30) side='left'
+                if (side == 'left') {
+                    minute=60-minute
+                    hour--
+                }
+                res1.innerHTML = `${pad(hour)} : ${pad(minute)}`
+                res2.innerHTML = `${pad(hour + 12 % 24)} : ${pad(minute)}`
+
+            }
+
+            elems = document.querySelectorAll('input, select')
+            for (let el of elems) {
+                el.addEventListener('change', updateResult)
+            }
+
+            updateResult()
+        });
+
+    </script>
+    <style>
+        .time-or {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            font-size: 1.2em;
+            opacity: .5;
+        }
+        #time-result-1,#time-result-2 {
+            text-align: center;
+            margin: 8px;
+            padding: 0px;
+        }
+        .hidden {
+            display:none
+        }
+    </style>
+</body>
+
+</html>
