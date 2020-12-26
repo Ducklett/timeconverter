@@ -1,11 +1,13 @@
-const CACHE_NAME = 'static-cache-v1';
+const CACHE_NAME = 'static-cache-v2';
 
 const FILES_TO_CACHE = [
 	'/index.html',
 	'/service-worker.js',
 	'/materialize.min.js',
 	'/materialize.min.css',
+	'/style.css',
 	'/manifest.json',
+	"/icons/icon-bg.png",
 	"/icons/icon-128.png",
 	"/icons/icon-144.png",
 	"/icons/icon-152.png",

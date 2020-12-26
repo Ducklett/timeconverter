@@ -1,0 +1,41 @@
+body {
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    /* background-color: #f7f4f4; */
+    background-image: url('icons/icon-bg.png');
+}
+
+.time-or {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    font-size: 1.2em;
+    opacity: .5;
+}
+
+#time-result-1, #time-result-2 {
+    text-align: center;
+    margin: 8px;
+    padding: 0px;
+    font-family: monospace;
+    position: relative;
+    font-size: 2.8em;
+}
+
+h2>small {
+    font-size: 39%;
+    opacity: .8;
+    vertical-align: bottom;
+    position: absolute;
+    top: -20px;
+}
+
+.hidden {
+    display: none
+}
+
+.vcenter {
+    display: flex;
+    align-items: center;
+}

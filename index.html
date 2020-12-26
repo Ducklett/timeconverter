@@ -6,37 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time converter</title>
 
-    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="materialize.min.css">
+    <link rel="stylesheet" href="style.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="manifest" href="/manifest.json">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-title" content="Sketchref">
-	<link rel="apple-touch-icon" href="/icons/icon-152.png">
-	<meta name="description" content="An app to manage sketch reference material">
-	<meta name="theme-color" content="#222222" />
-	<link rel="icon" href="/icons/icon-128.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Sketchref">
+    <link rel="apple-touch-icon" href="/icons/icon-152.png">
+    <meta name="description" content="Helps converting analog to digital time">
+    <meta name="theme-color" content="#222222" />
+    <link rel="icon" href="/icons/icon-128.png">
 </head>
 
 <body class="vcenter ">
     <div class="container ">
         <div>
-                <div class="card">
-                    <div class="card-content">
-            <div class="row" style="padding-top: 30px;">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" style="padding-top: 30px;">
                         <div class="input-field col s4">
-                            <!-- <input value="10" id="first_name" type="number"> -->
-                            <select name="direction" id="first_name">
+                            <!-- <input value="10" id="minute_field" type="number"> -->
+                            <select name="direction" id="minute_field">
                                 <option value="5" selected>Vijf</option>
                                 <option value="10" selected>Tien</option>
                                 <option value="15" selected>Kwart</option>
                                 <option value="30">Half</option>
                             </select>
-                            <label for="first_name">Minuut</label>
+                            <label for="minute_field">Minuut</label>
                         </div>
                         <div class="input-field col s4">
                             <select name="direction" id="hand-direction">
@@ -45,7 +44,7 @@
                             </select>
                         </div>
                         <div class="input-field col s4">
-                            <select name="direction" id="last_name">
+                            <select name="direction" id="hour_field">
                                 <option value="1" selected>1</option>
                                 <option value="2" selected>2</option>
                                 <option value="3" selected>3</option>
@@ -59,14 +58,13 @@
                                 <option value="11" selected>11</option>
                                 <option value="12" selected>12</option>
                             </select>
-                            <label for="last_name">Uur</label>
+                            <label for="hour_field">Uur</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-content">
-                    <span class="card-title">Digitale tijd</span>
+                <div class="card-content" style="padding-top: 50px;">
                     <h2 id="time-result-1"></h2>
                     <small class="time-or">Of</small>
                     <h2 id="time-result-2"></h2>
@@ -75,30 +73,27 @@
         </div>
     </div>
 
-    <!-- Compiled and minified JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <script src="materialize.min.js"></script>
     <script>
 
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', () => {
-				navigator.serviceWorker.register('/service-worker.js')
-				.then((reg) => {
-					console.log('Service worker registered.', reg);
-				});
-			});
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((reg) => {
+                        console.log('Service worker registered.', reg);
+                    });
+            });
         }
-        
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
             let options = {}
             var instances = M.FormSelect.init(elems, options);
 
-            const min = document.getElementById('first_name')
+            const min = document.getElementById('minute_field')
             const sign = document.getElementById('hand-direction')
             const signContainer = sign.parentElement
-            const hourv = document.getElementById('last_name')
+            const hourv = document.getElementById('hour_field')
             const res1 = document.getElementById('time-result-1')
             const res2 = document.getElementById('time-result-2')
 
@@ -133,43 +128,6 @@
         });
 
     </script>
-    <style>
-        body {
-            min-height: 100vh;
-            padding: 0;
-            margin: 0;
-        }
-
-        .time-or {
-            display: inline-block;
-            text-align: center;
-            width: 100%;
-            font-size: 1.2em;
-            opacity: .5;
-        }
-
-        #time-result-1,
-        #time-result-2 {
-            text-align: center;
-            margin: 8px;
-            padding: 0px;
-        }
-
-        h2>small {
-            font-size: 39%;
-            opacity: .8;
-            vertical-align: bottom;
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .vcenter {
-            display: flex;
-            align-items: center;
-        }
-    </style>
 </body>
 
 </html>
