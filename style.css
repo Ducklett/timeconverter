@@ -43,3 +43,31 @@ h2>small {
 .container {
     max-width: 700px;
 }
+
+.dark * {
+    color: rgba(255,255,255,.7);
+}
+
+body.dark {
+    background-image: url('icons/icon-bg-dark.png');
+}
+
+.dark .card {
+    background-color: #131313;
+}
+
+.dark .select-wrapper li {
+    background-color: #181818;
+}
+
+.dark .select-wrapper li:hover {
+    background-color: #252525;
+}
+
+.dark .select-wrapper li.selected {
+    background-color: #252525!important;
+}
+
+.dark .select-wrapper li.disabled>span {
+    color: rgba(255,255,255,.2)!important;
+}
