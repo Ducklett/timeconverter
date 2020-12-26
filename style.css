@@ -38,6 +38,9 @@ h2>small {
 .vcenter {
     display: flex;
     align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
 }
 
 .container {
@@ -70,4 +73,9 @@ body.dark {
 
 .dark .select-wrapper li.disabled>span {
     color: rgba(255,255,255,.2)!important;
+}
+
+#themetoggle {
+    float: right;
+    margin: 32px;
 }

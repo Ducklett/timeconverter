@@ -21,60 +21,66 @@
     <link rel="icon" href="/icons/icon-128.png">
 </head>
 
-<body class="vcenter dark">
-    <div class="container ">
-        <div>
-            <div class="card">
-                <div class="card-content">
-                    <div class="row" style="padding-top: 30px;">
-                        <div class="input-field col s4">
-                            <!-- <input value="10" id="minute_field" type="number"> -->
-                            <select name="minute" id="minute_field">
-                                <option value="0" selected>-</option>
-                                <option value="5" selected>Vijf</option>
-                                <option value="10" selected>Tien</option>
-                                <option value="15" selected>Kwart</option>
-                                <option value="30">Half</option>
-                            </select>
-                            <label for="minute_field">Minuut</label>
-                        </div>
-                        <div class="input-field col s4">
-                            <select name="direction" id="hand-direction">
-                                <option value="left" selected>Voor</option>
-                                <option value="right">Over</option>
-                                <option id="to-half" value="leftDown">Voor half</option>
-                                <option id="past-half" value="rightDown">Over half</option>
-                            </select>
-                        </div>
-                        <div class="input-field col s4">
-                            <select name="hour" id="hour_field">
-                                <option value="1" selected>1</option>
-                                <option value="2" selected>2</option>
-                                <option value="3" selected>3</option>
-                                <option value="4" selected>4</option>
-                                <option value="5" selected>5</option>
-                                <option value="6" selected>6</option>
-                                <option value="7" selected>7</option>
-                                <option value="8" selected>8</option>
-                                <option value="9" selected>9</option>
-                                <option value="10" selected>10</option>
-                                <option value="11" selected>11</option>
-                                <option value="12" selected>12</option>
-                            </select>
-                            <label for="hour_field">Uur</label>
+<body class="dark">
+
+    <button id="themetoggle" class="btn waves-effect waves-light" type="submit" name="action">Toggle theme</button>
+    <div class="vcenter">
+        <div class="container ">
+            <div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row" style="padding-top: 30px;">
+                            <div class="input-field col s4">
+                                <!-- <input value="10" id="minute_field" type="number"> -->
+                                <select name="minute" id="minute_field">
+                                    <option value="0" selected>-</option>
+                                    <option value="5" selected>Vijf</option>
+                                    <option value="10" selected>Tien</option>
+                                    <option value="15" selected>Kwart</option>
+                                    <option value="30">Half</option>
+                                </select>
+                                <label for="minute_field">Minuut</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <select name="direction" id="hand-direction">
+                                    <option value="left" selected>Voor</option>
+                                    <option value="right">Over</option>
+                                    <option id="to-half" value="leftDown">Voor half</option>
+                                    <option id="past-half" value="rightDown">Over half</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s4">
+                                <select name="hour" id="hour_field">
+                                    <option value="1" selected>1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4" selected>4</option>
+                                    <option value="5" selected>5</option>
+                                    <option value="6" selected>6</option>
+                                    <option value="7" selected>7</option>
+                                    <option value="8" selected>8</option>
+                                    <option value="9" selected>9</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="11" selected>11</option>
+                                    <option value="12" selected>12</option>
+                                </select>
+                                <label for="hour_field">Uur</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-content" style="padding-top: 50px;">
-                    <h2 id="time-result-1"></h2>
-                    <small class="time-or">Of</small>
-                    <h2 id="time-result-2"></h2>
+                <div class="card">
+                    <div class="card-content" style="padding-top: 50px;">
+                        <h2 id="time-result-1"></h2>
+                        <small class="time-or">Of</small>
+                        <h2 id="time-result-2"></h2>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
+
 
     <script src="materialize.min.js"></script>
     <script>
@@ -96,6 +102,7 @@
                 var instances = M.FormSelect.init(elems, options);
             }
 
+            const themeToggle = document.getElementById('themetoggle')
             const min = document.getElementById('minute_field')
             const sign = document.getElementById('hand-direction')
             const signContainer = sign.parentElement
@@ -104,6 +111,19 @@
             const res2 = document.getElementById('time-result-2')
             const tohalf = document.getElementById('to-half')
             const pasthalf = document.getElementById('past-half')
+
+            const theme = localStorage.getItem('theme')
+
+            if (theme != undefined) {
+                const isDark = theme == 'dark'
+                document.body.classList[isDark ? 'remove' : 'add']('dark')
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.body.classList.contains('dark')
+                document.body.classList[isDark ? 'remove' : 'add']('dark')
+                localStorage.setItem('theme', isDark ? 'dark' : 'light')
+            })
 
             const updateResult = () => {
                 const pad = v => v.toString().padStart(2, '0')
